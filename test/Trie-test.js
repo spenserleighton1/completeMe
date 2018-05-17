@@ -10,7 +10,20 @@ const dictionary = fs.readFileSync(text).toString().trim().split('\n')
   beforeEach(() => {
     trie = new Trie();
   })
-    it('should create the perfect tree', () => {
+
+    it('should hava a count property with a default value of 0', () => {
+      expect(trie.count).to.equal(0)
+    })
+
+    it('should have a Root property with a default value of an empty node', () => {
+      expect(trie.root).to.deep.equal({ data: null, child: {}, completeWord: null })
+    })
+
+    it('should have a suggestions property with a default value of an empty array', () => {
+      expect(trie.suggestions).to.deep.equal([])
+    })
+
+    it('should take in words to create the perfect tree', () => {
       trie.insert('dog')
       trie.insert('funny')
       let expected = {
@@ -100,6 +113,7 @@ const dictionary = fs.readFileSync(text).toString().trim().split('\n')
       expect(trie.suggestions).to.deep.equal(['dog', 'doggy', 'done']);
       // console.log(JSON.stringify(trie, null, 4))
     });  
+
   });
 
   describe('Populate', () => {
@@ -127,6 +141,11 @@ const dictionary = fs.readFileSync(text).toString().trim().split('\n')
         "worldway",
         "worldy"])
     })   
+
+    it.skip('should keep count of the number of words in the dictionary', () => {
+      trie.populate(dictionary)
+      expect(trie.count).to.equal(235886)
+    })
   });
 
   describe('Count', () => {
