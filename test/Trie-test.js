@@ -117,7 +117,7 @@ const dictionary = fs.readFileSync(text).toString().trim().split('\n')
   });
 
   describe('Populate', () => {
-    it.skip('should populate from the dictionary', () => {
+    it('should populate from the dictionary', () => {
       trie.populate(dictionary)
       trie.suggest('world')
       expect(trie.suggestions).to.deep.equal([         
@@ -142,7 +142,7 @@ const dictionary = fs.readFileSync(text).toString().trim().split('\n')
         "worldy"])
     })   
 
-    it.skip('should keep count of the number of words in the dictionary', () => {
+    it('should keep count of the words in the dictionary', () => {
       trie.populate(dictionary)
       expect(trie.count).to.equal(235886)
     })
@@ -157,7 +157,17 @@ const dictionary = fs.readFileSync(text).toString().trim().split('\n')
       trie.insert('awesome')
       expect(trie.counter()).to.equal(5)
     })
-
-
   });
+
+  describe('Contains', () => {
+    it.only('should return true or false depending on if the word givin in complete', () => {
+      trie.insert('eye');
+      trie.insert('love');
+      trie.insert('prefixtrie');
+      
+      expect(trie.contains('eye')).to.equal(true);
+      expect(trie.contains('ey')).to.equal(false)
+
+    })
+  })
 });
